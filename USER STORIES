@@ -1,0 +1,6 @@
+USER STORIES:
+
+As a user, I would like to be able to send a text message.
+As a user, I would like to be able to input as many numbers as I like to send a mass text.
+As a user, I would like to be able to validate that a phone number is a 10 digit number.
+As a user, I would liek to be able to validate that a text message can't be blank. 
