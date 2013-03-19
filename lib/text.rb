@@ -10,10 +10,10 @@ ACCOUNT_SID = 'AC7529b4d8b0e86d345eded1d9b0c139a1'
 AUTH_TOKEN = '0ac7586e91e08ee4d27f2901f855a413'
 DORRIT = '+15102284957'
 
-  attr_accessor :To, :Body
 
   def initialize(options)
-    
+    @to = options[:To]
+    @body = options[:Body]
   end
 
 
@@ -22,7 +22,7 @@ DORRIT = '+15102284957'
    post_response = Faraday.post do |request|
     request.url "https://api.twilio.com/2010-04-01/Accounts/#{ACCOUNT_SID}/SMS/Messages.json"
     request.headers['Authorization'] = "Basic " + Base64.strict_encode64("#{ACCOUNT_SID}:#{AUTH_TOKEN}")
-    request.body = URI.encode_www_form({:From => "#{DORRIT}"}) #options[:To], options[:Body])
+    request.body = URI.encode_www_form(options) 
    end
   end
 end
