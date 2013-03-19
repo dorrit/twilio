@@ -28,11 +28,11 @@ def create
         phone_number.errors.full_messages.each {|message| puts message}
       end
       phone_numbers = []
-      phone_numbers << number
+      phone_numbers << phone_number
     end
       
     # numbers = [2345678901, 23456778]
-    Text.create(:body => messsage, :numbers => phone_numbers)
+    Text.create(:Body => message, :To => phone_numbers)
     puts "Thanks for using the Twilio text messager!"
   end
 end
