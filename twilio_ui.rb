@@ -14,8 +14,8 @@ def welcome
   create
 end
 
-
 def create
+  phone_numbers = []
   puts "What message would you like to send?"
   message = gets.chomp
   if message == ''
@@ -23,33 +23,26 @@ def create
     create
   end
   choice = nil
-  until choice == 's'
+  until choice == 'x'
     puts "Please enter a phone number of a person you would like to text. "
     number = gets.chomp
     phone_number = Phone.new(:phone_number => number)
     if phone_number.valid?
       puts "'#{number}' has been added."
+      phone_numbers << number
     else
       puts "That wasn't a valid number:"
       phone_number.errors.full_messages.each {|message| puts message}
     end
-    puts "What would you like to do next?"
-    puts "Enter 'a' add another number"
-    puts "Enter 's' send the message"
-    choice = gets.chomp
-    case choice
-      when 'a'
-        add_number
-      when 's'
-    end
+      puts "What would you like to do next?"
+      puts "Press 'x' to send to all your added contact phone numbers or any other key to add another number."
+      choice = gets.chomp
   end
-
-  p Text.create({ 'Body' => "#{message}", 'From' => '+15102284957', 'To' => "#{number}" })
+      phone_numbers.map do |numba| 
+      p Text.create({ 'Body' => "#{message}", 'From' => "#{DORRIT}", 'To' => numba})
+    
+  end 
   puts "Thanks for using the Twilio text messager!"
 end
-
-  
-
-  # Gist.create(:public => public_attribute, :description => description, :files => files)
 
 welcome

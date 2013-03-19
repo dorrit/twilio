@@ -8,6 +8,14 @@ describe Phone do
     end
   end
 
+  context 'attr_accessor' do 
+    it 'should read the phone number' do 
+      phone_number = {:phone_number => '510-495-5432'}
+      phone = Phone.new(phone_number)
+      phone.phone_number.should eq "510-495-5432"
+    end
+  end
+
   context '#validations' do 
     it 'should be a 10 digit phone number' do
       phone_number = {:phone_number => '510-495-543'}
