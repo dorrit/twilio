@@ -1,13 +1,4 @@
-require './lib/text'
-require './lib/phone'
-require 'active_model'
-require 'Base64'
-require 'json'
-require 'faraday'
-
-ACCOUNT_SID = 'AC7529b4d8b0e86d345eded1d9b0c139a1'
-AUTH_TOKEN = '0ac7586e91e08ee4d27f2901f855a413'
-DORRIT = '+15102284957'
+require './ui_helper'
 
 def welcome
   puts "Welcome to the Twilio text messager."
@@ -15,13 +6,17 @@ def welcome
 end
 
 def create
+  message = get_message
+  phone_numbers = get_phone_numbers
+
+  phone_numbers.map do |numba| 
+    p Text.create({ 'Body' => "#{message}", 'From' => "#{DORRIT}", 'To' => numba})  
+  end 
+  puts "Thanks for using the Twilio text messager!"
+end
+
+def get_phone_numbers
   phone_numbers = []
-  puts "What message would you like to send?"
-  message = gets.chomp
-  if message == ''
-    puts "Please enter a valid message"
-    create
-  end
   choice = nil
   until choice == 'x'
     puts "Please enter a phone number of a person you would like to text. "
@@ -38,11 +33,17 @@ def create
       puts "Press 'x' to send to all your added contact phone numbers or any other key to add another number."
       choice = gets.chomp
   end
-      phone_numbers.map do |numba| 
-      p Text.create({ 'Body' => "#{message}", 'From' => "#{DORRIT}", 'To' => numba})
-    
-  end 
-  puts "Thanks for using the Twilio text messager!"
+  phone_numbers
+end
+
+def get_message
+  puts "What message would you like to send?"
+  message = gets.chomp
+  if message == ''
+    puts "Please enter a valid message"
+    get_message
+  end
+  message
 end
 
 welcome
